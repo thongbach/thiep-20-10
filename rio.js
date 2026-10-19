@@ -171,7 +171,7 @@
 
   function syncMusicPanel() {
     musicToggle.setAttribute("aria-expanded", String(musicOpen));
-    musicToggle.setAttribute("aria-label", musicOpen ? "Đóng trình phát Từng Ngày Yêu Em" : "Mở nhạc Từng Ngày Yêu Em");
+    musicToggle.setAttribute("aria-label", musicOpen ? "Đóng trình phát Dancin’ My Way" : "Mở nhạc Dancin’ My Way");
     musicLabel.textContent = musicOpen ? "NHẠC · ĐÓNG" : "NHẠC · MỞ";
   }
 
