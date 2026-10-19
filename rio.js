@@ -15,8 +15,11 @@
   const signature = $("#signature");
   const nextButton = $("#nextButton");
   const replayButton = $("#replayButton");
-  const soundToggle = $("#soundToggle");
-  const soundLabel = $("#soundLabel");
+  const musicToggle = $("#musicToggle");
+  const musicLabel = $("#musicLabel");
+  const musicPanel = $("#musicPanel");
+  const musicFrame = $("#musicFrame");
+  const musicClose = $("#musicClose");
   const canvas = $("#fireworks");
   const ctx = canvas.getContext("2d");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -64,11 +67,7 @@
 
   let current = -1;
   let timer = 0;
-  let soundEnabled = true;
-  let audioContext = null;
-  let masterGain = null;
-  let musicTimer = 0;
-  let barIndex = 0;
+  let musicOpen = false;
   let width = 0;
   let height = 0;
   let particles = [];
@@ -127,7 +126,6 @@
     storyCopy.classList.add("is-entering");
     updateProgress(index, scene);
     if (!scene.wait && !scene.final) timer = window.setTimeout(() => showScene(index + 1), scene.duration);
-    if (soundEnabled && !musicTimer) startMusic();
   }
 
   function nextScene() {
@@ -156,7 +154,6 @@
     if (body.classList.contains("is-playing")) return;
     opening.classList.add("is-leaving");
     body.classList.add("is-playing");
-    if (soundEnabled) startMusic();
     showScene(0);
   }
 
@@ -170,95 +167,25 @@
     choices.hidden = true;
     current = -1;
     [...progress.children].forEach(segment => segment.classList.remove("is-done", "is-current"));
-    if (soundEnabled && !musicTimer) startMusic();
   }
 
-  function syncSound() {
-    soundToggle.setAttribute("aria-pressed", String(soundEnabled));
-    soundToggle.setAttribute("aria-label", soundEnabled ? "Tắt nhạc nhẹ" : "Bật nhạc nhẹ");
-    soundLabel.textContent = soundEnabled ? (body.classList.contains("is-playing") ? "NHẠC NHẸ · BẬT" : "NHẠC NHẸ · SẴN SÀNG") : "NHẠC NHẸ · TẮT";
+  function syncMusicPanel() {
+    musicToggle.setAttribute("aria-expanded", String(musicOpen));
+    musicToggle.setAttribute("aria-label", musicOpen ? "Đóng trình phát Từng Ngày Yêu Em" : "Mở nhạc Từng Ngày Yêu Em");
+    musicLabel.textContent = musicOpen ? "NHẠC · ĐÓNG" : "NHẠC · MỞ";
   }
 
-  function initAudio() {
-    if (!audioContext) {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextClass) return false;
-      audioContext = new AudioContextClass();
-      masterGain = audioContext.createGain();
-      masterGain.gain.value = 0;
-      masterGain.connect(audioContext.destination);
-    }
-    if (audioContext.state === "suspended") audioContext.resume();
-    return true;
-  }
-
-  function note(frequency, start, duration, volume, type = "sine") {
-    if (!audioContext || !masterGain) return;
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, start);
-    gain.gain.setValueAtTime(0.0001, start);
-    gain.gain.exponentialRampToValueAtTime(volume, start + 0.12);
-    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-    oscillator.connect(gain);
-    gain.connect(masterGain);
-    oscillator.start(start);
-    oscillator.stop(start + duration + 0.03);
-    oscillator.addEventListener("ended", () => {
-      oscillator.disconnect();
-      gain.disconnect();
-    }, { once: true });
-  }
-
-  const chords = [
-    [261.63, 329.63, 392],
-    [220, 261.63, 329.63],
-    [174.61, 220, 261.63],
-    [196, 246.94, 293.66]
-  ];
-  const melody = [523.25, 587.33, 659.25, 587.33, 493.88, 523.25, 392, 440];
-
-  function playBar() {
-    if (!soundEnabled || !audioContext) {
-      musicTimer = 0;
-      return;
-    }
-    const start = audioContext.currentTime + 0.08;
-    const chord = chords[barIndex % chords.length];
-    chord.forEach((frequency, i) => note(frequency, start + i * 0.035, 2.6, 0.014, "sine"));
-    for (let i = 0; i < 4; i++) note(melody[(barIndex * 2 + i) % melody.length], start + i * 0.62, 0.72, 0.023, "sine");
-    barIndex += 1;
-    musicTimer = window.setTimeout(playBar, 2700);
-  }
-
-  function startMusic() {
-    if (!soundEnabled || musicTimer || !initAudio()) return;
-    masterGain.gain.cancelScheduledValues(audioContext.currentTime);
-    masterGain.gain.setTargetAtTime(0.72, audioContext.currentTime, 0.55);
-    body.classList.add("audio-on");
-    syncSound();
-    playBar();
-  }
-
-  function stopMusic() {
-    window.clearTimeout(musicTimer);
-    musicTimer = 0;
-    body.classList.remove("audio-on");
-    if (audioContext && masterGain) {
-      masterGain.gain.cancelScheduledValues(audioContext.currentTime);
-      masterGain.gain.setTargetAtTime(0, audioContext.currentTime, 0.08);
-    }
-  }
-
-  function toggleSound() {
-    soundEnabled = !soundEnabled;
-    if (soundEnabled) {
-      if (body.classList.contains("is-playing")) startMusic();
+  function setMusicPanel(open) {
+    musicOpen = Boolean(open);
+    musicPanel.hidden = !musicOpen;
+    if (musicOpen) {
+      musicFrame.src = musicFrame.dataset.src;
+      musicClose.focus({ preventScroll: true });
     } else {
-      stopMusic();
+      musicFrame.src = "about:blank";
+      musicToggle.focus({ preventScroll: true });
     }
-    syncSound();
+    syncMusicPanel();
   }
 
   function resizeCanvas() {
@@ -313,19 +240,20 @@
   $("#startButton").addEventListener("click", startExperience);
   nextButton.addEventListener("click", nextScene);
   replayButton.addEventListener("click", replay);
-  soundToggle.addEventListener("click", toggleSound);
+  musicToggle.addEventListener("click", () => setMusicPanel(!musicOpen));
+  musicClose.addEventListener("click", () => setMusicPanel(false));
   choices.addEventListener("click", event => {
     const button = event.target.closest("[data-answer]");
     if (button) answerQuestion(button.dataset.answer);
   });
   opening.addEventListener("click", event => {
-    if (!event.target.closest("button,.sound-button")) startExperience();
+    if (!event.target.closest("button,.music-button,.music-panel")) startExperience();
   });
   story.addEventListener("click", event => {
-    if (!event.target.closest("button,.sound-button") && current >= 0 && !scenes[current].wait && !scenes[current].final) nextScene();
+    if (!event.target.closest("button,.music-button,.music-panel") && current >= 0 && !scenes[current].wait && !scenes[current].final) nextScene();
   });
   document.addEventListener("keydown", event => {
-    if (event.target.closest("button")) return;
+    if (event.target.closest("button,.music-panel")) return;
     if (event.key === " " || event.key === "ArrowRight" || event.key === "Enter") {
       event.preventDefault();
       if (current < 0) startExperience();
@@ -336,6 +264,6 @@
 
   buildProgress();
   resizeCanvas();
-  syncSound();
+  syncMusicPanel();
   drawFireworks();
 })();

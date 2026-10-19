@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#100824">
-  <meta name="description" content="Một lời chúc 20/10 đáng yêu, có pháo hoa và giai điệu nhẹ, gửi từ Rio và bạn.">
+  <meta name="description" content="Một lời chúc 20/10 đáng yêu, có pháo hoa và MV Từng Ngày Yêu Em của Bùi Trường Linh, gửi từ Rio và bạn.">
   <meta property="og:title" content="Một ngày thật dịu dàng · 20/10">
-  <meta property="og:description" content="Chạm để bắt đầu câu chuyện nhỏ từ Rio và bạn, với pháo hoa và những lời chúc tốt đẹp.">
+  <meta property="og:description" content="Chạm để bắt đầu câu chuyện nhỏ từ Rio và bạn, với pháo hoa và bài hát Từng Ngày Yêu Em của Bùi Trường Linh.">
   <title>Một ngày thật dịu dàng · 20/10</title>
   <link rel="stylesheet" href="rio.css">
   <script src="rio.js" defer></script>
@@ -18,11 +18,28 @@
 
   <header class="topbar">
     <div class="brand"><span aria-hidden="true">♡</span><span>RIO & BẠN&nbsp; / &nbsp;20 · 10</span></div>
-    <button class="sound-button" id="soundToggle" type="button" aria-label="Bật nhạc nhẹ" aria-pressed="false">
-      <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-      <span id="soundLabel">NHẠC NHẸ · TẮT</span>
+    <button class="music-button" id="musicToggle" type="button" aria-label="Mở nhạc Từng Ngày Yêu Em" aria-expanded="false" aria-controls="musicPanel">
+      <span class="music-note-icon" aria-hidden="true">♫</span>
+      <span id="musicLabel">NHẠC · MỞ</span>
     </button>
   </header>
+
+  <aside class="music-panel" id="musicPanel" aria-labelledby="musicTitle" hidden>
+    <div class="music-panel__top">
+      <div>
+        <p class="music-kicker">NHẠC GỬI TỪ RIO</p>
+        <p class="music-title" id="musicTitle">Từng Ngày Yêu Em <span>· Bùi Trường Linh</span></p>
+      </div>
+      <button class="music-close" id="musicClose" type="button" aria-label="Đóng trình phát nhạc">×</button>
+    </div>
+    <iframe id="musicFrame" title="MV chính thức Từng Ngày Yêu Em của Bùi Trường Linh"
+      src="about:blank"
+      data-src="https://www.youtube-nocookie.com/embed/f-VsoLm4i5c?rel=0&modestbranding=1&playsinline=1"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <p class="music-note">Nhấn nút phát trong video để nghe bản chính thức.</p>
+  </aside>
 
   <div class="progress" id="progress" aria-hidden="true"></div>
 
@@ -86,7 +103,7 @@
         <h1 id="openingTitle">Một ngày<br><em>thật đáng yêu</em></h1>
         <p class="lead" id="openingLead">Một lời chúc nhỏ từ Rio và bạn, gửi đến những người phụ nữ tuyệt vời quanh mình.</p>
         <button class="primary-button" id="startButton" type="button">Chạm để bắt đầu <span aria-hidden="true">✦</span></button>
-        <p class="hint">Rio đang chờ bạn chạm để bắt đầu pháo hoa và giai điệu nhẹ</p>
+        <p class="hint">Mở nút nhạc ở góc trên để nghe bài hát, rồi chạm để bắt đầu pháo hoa</p>
       </div>
     </section>
 
