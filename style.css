@@ -12,8 +12,7 @@ body{
   transition:background 1.2s ease;isolation:isolate
 }
 body[data-scene="date"]{--sky-top:#32114c;--sky-mid:#180c35;--sky-bottom:#09081d}
-body[data-scene="history"]{--sky-top:#164564;--sky-mid:#0c2539;--sky-bottom:#06111e}
-body[data-scene="women"]{--sky-top:#532149;--sky-mid:#291336;--sky-bottom:#10091f}
+body[data-scene="kindness"]{--sky-top:#6b3c58;--sky-mid:#351b43;--sky-bottom:#120d25}
 body[data-scene="everyday"]{--sky-top:#673056;--sky-mid:#351b48;--sky-bottom:#130d25}
 body[data-scene="wish"]{--sky-top:#114657;--sky-mid:#0a273e;--sky-bottom:#07121f}
 body[data-scene="question"]{--sky-top:#45205d;--sky-mid:#20133d;--sky-bottom:#0d0b24}
@@ -26,7 +25,7 @@ body:after{position:fixed;z-index:0;inset:0;content:"";pointer-events:none;opaci
 .aurora{position:fixed;z-index:0;width:min(55vw,660px);aspect-ratio:1;border-radius:50%;filter:blur(82px);opacity:.19;pointer-events:none;transition:background 1s}
 .aurora--left{top:-42%;left:-20%;background:#bd6bd8}
 .aurora--right{right:-27%;bottom:-48%;background:#ff7fa7;opacity:.13}
-body[data-scene="history"] .aurora--left{background:#63cfe0}
+body[data-scene="kindness"] .aurora--left{background:#ffc282}
 body[data-scene="final"] .aurora--right{background:#ffd782;opacity:.26}
 .topbar{position:fixed;z-index:5;inset:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(15px,4vw,54px);gap:12px}
 .brand{display:flex;align-items:center;gap:9px;color:#f7e7fb;font-size:.68rem;font-weight:850;letter-spacing:.17em}
@@ -67,20 +66,16 @@ h1 em,h2 em{color:var(--rose);font-weight:400}
 @keyframes halo-pulse{0%,100%{transform:scale(.94);opacity:.68}50%{transform:scale(1.08);opacity:1}}
 .mascot{position:relative;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 12px 24px rgba(255,129,203,.22));animation:float 4.2s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.wing{transform-box:fill-box;transform-origin:center;animation:wingbeat 1.8s ease-in-out infinite alternate}
-.wing--right{animation-delay:-.45s}
-@keyframes wingbeat{to{transform:scaleY(.76) rotate(7deg);opacity:.68}}
-.crown{transform-box:fill-box;transform-origin:center;animation:sway 4s ease-in-out infinite}
-@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
-.arm--right{transform-box:fill-box;transform-origin:left center;animation:wave 1.2s ease-in-out infinite alternate}
+.cat-tail{transform-box:fill-box;transform-origin:10% 50%;animation:tail-sway 2.4s ease-in-out infinite alternate}
+@keyframes tail-sway{from{transform:rotate(-5deg)}to{transform:rotate(7deg)}}
+.cat-arm--right{transform-box:fill-box;transform-origin:15% 80%;animation:wave 1.2s ease-in-out infinite alternate}
 @keyframes wave{from{transform:rotate(-9deg)}to{transform:rotate(10deg)}}
 .twinkle{transform-box:fill-box;transform-origin:center;animation:twinkle 1.7s ease-in-out infinite}
 .twinkle--two{animation-delay:-.8s}
 @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.75)}50%{opacity:1;transform:scale(1.16)}}
 .scene-symbol{position:absolute;z-index:-1;top:41%;left:50%;display:grid;place-items:center;width:148%;aspect-ratio:1;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.13);border-radius:50%;color:rgba(255,221,242,.5);font-family:Georgia,"Times New Roman",serif;font-size:clamp(3rem,10vw,6rem);text-shadow:0 0 30px rgba(255,159,201,.65);background:radial-gradient(circle,rgba(239,171,233,.16),transparent 67%);transition:all .65s ease}
 body[data-scene="date"] .scene-symbol{color:#ffe0a1}
-body[data-scene="history"] .scene-symbol{color:#9be8ef}
-body[data-scene="women"] .scene-symbol{color:#ffc5e4}
+body[data-scene="kindness"] .scene-symbol{color:#ffd4a0}
 body[data-scene="everyday"] .scene-symbol{color:#ded1ff}
 body[data-scene="wish"] .scene-symbol{color:#a8f4d9}
 body[data-scene="final"] .scene-symbol{transform:translate(-50%,-50%) scale(1.2);color:#ffe3a2;opacity:.82}
@@ -110,7 +105,7 @@ body.is-playing .mascot-stage{top:4vh;width:min(41vw,205px)}
 body.is-playing .mascot-stage .scene-symbol{width:137%}
 body.is-playing[data-scene="question"] .mascot-stage{top:2vh}
 body.is-playing[data-scene="final"] .mascot-stage{top:1vh;width:min(37vw,185px)}
-body.is-playing[data-scene="final"] .arm--right{animation-duration:.65s}
+body.is-playing[data-scene="final"] .cat-arm--right{animation-duration:.65s}
 @media(max-width:600px){
   .topbar{padding:15px 13px}.brand{gap:6px;font-size:.52rem;letter-spacing:.11em}.sound-button{min-height:35px;gap:7px;padding:0 9px;font-size:.53rem;letter-spacing:.045em}
   .progress{top:59px;width:calc(100% - 30px)}
