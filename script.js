@@ -23,42 +23,42 @@
   const params = new URLSearchParams(window.location.search);
   const cleanParam = (value, fallback) => (value || fallback).trim().slice(0, 40);
   const recipient = cleanParam(params.get("to"), "");
-  const sender = cleanParam(params.get("from"), "Thông Bạch");
-  if (recipient) $("#openingLead").textContent = `Một câu chuyện nhỏ gửi riêng cho ${recipient}, từ Thông Bạch.`;
+  const sender = cleanParam(params.get("from"), "Rio và bạn");
+  if (recipient) $("#openingLead").textContent = `Một lời chúc nhỏ từ Rio và bạn, gửi riêng đến ${recipient}.`;
 
   const scenes = [
     {
-      id: "hello", theme: "date", icon: "✿", eyebrow: "NỤ CÓ ĐIỀU MUỐN NÓI",
+      id: "hello", theme: "date", icon: "♡", eyebrow: "RIO CÓ ĐIỀU MUỐN NÓI",
       title: recipient ? `Này ${recipient} ơi!` : "Này bạn ơi!",
-      text: "Hôm nay Nụ có một món quà nhỏ dành riêng cho bạn.", duration: 5200, burst: true
+      text: "Rio mang đến một món quà nhỏ cùng thật nhiều lời thương dành cho bạn.", duration: 5200, burst: true
     },
     {
       id: "date", theme: "date", icon: "✦", eyebrow: "NGÀY PHỤ NỮ VIỆT NAM",
-      title: "20 · 10", text: "Chúc mừng ngày của những người phụ nữ tuyệt vời — hôm nay và mỗi ngày.", duration: 5600
+      title: "20 · 10", text: "Chúc mừng ngày của những người phụ nữ tuyệt vời. Hôm nay và mọi ngày, mong bạn luôn được trân trọng và yêu thương.", duration: 6100
     },
     {
-      id: "history", theme: "history", icon: "✧", eyebrow: "MỘT DẤU MỐC ĐÁNG NHỚ",
-      title: "Từ năm 1930…", text: "Ngày 20 tháng 10 năm ấy, một hành trình mới bắt đầu. Qua bao thế hệ, phụ nữ Việt Nam vẫn bền bỉ viết tiếp những điều đáng tự hào.", duration: 6800
+      id: "kindness", theme: "kindness", icon: "☀", eyebrow: "RIO THẤY BẠN THẬT ĐẶC BIỆT",
+      title: "Bạn rạng rỡ\ntheo cách riêng", text: "Không cần phải giống ai cả. Nụ cười, sự chân thành và những điều bạn làm mỗi ngày đã tạo nên nét đẹp rất riêng của bạn.", duration: 6800
     },
     {
-      id: "women", theme: "women", icon: "❀", eyebrow: "NHỮNG NGƯỜI MỞ LỐI",
-      title: "Mạnh mẽ theo cách riêng", text: "Từ Hai Bà Trưng, Bà Triệu đến biết bao người phụ nữ hôm nay — mỗi người đều để lại một dấu ấn đẹp trong câu chuyện của mình.", duration: 6500
+      id: "everyday", theme: "everyday", icon: "☾", eyebrow: "MỘT LỜI NHẮN NHỎ",
+      title: "Bạn cũng xứng đáng\nđược nâng niu", text: "Mong bạn luôn có thời gian nghỉ ngơi, được lắng nghe và thoải mái theo đuổi những điều khiến trái tim mình vui.", duration: 6500
     },
     {
-      id: "everyday", theme: "everyday", icon: "☾", eyebrow: "NHỮNG ĐIỀU THƯỜNG NGÀY",
-      title: "Bạn làm ngày thường ấm hơn", text: "Bằng sự quan tâm, lòng kiên nhẫn và cả những điều nhỏ bé mà đôi khi chẳng ai kịp nói lời cảm ơn.", duration: 6300
+      id: "little-joys", theme: "wish", icon: "✧", eyebrow: "NHỮNG NIỀM VUI BE BÉ",
+      title: "Mong ngày nào cũng\ncó điều khiến bạn cười", text: "Một tách trà ngon, một tin nhắn dễ thương hay một buổi chiều thảnh thơi — những điều nhỏ xinh cũng có thể làm lòng mình ấm áp.", duration: 6300
     },
     {
-      id: "wish", theme: "wish", icon: "♥", eyebrow: "NỤ GỬI BẠN BỐN ĐIỀU",
-      title: "Khỏe mạnh · Bình yên\nTự do · Được yêu thương", text: "Mong bạn có thật nhiều niềm vui, được làm điều mình yêu thích và luôn nhớ rằng bạn xứng đáng với những điều tốt đẹp.", duration: 7400
+      id: "wish", theme: "wish", icon: "♥", eyebrow: "RIO CHÚC BẠN BỐN ĐIỀU",
+      title: "Khỏe mạnh · Bình yên\nTự do · Được yêu thương", text: "Chúc bạn có thật nhiều niềm vui, luôn tin vào mình và gặp thật nhiều điều tốt đẹp trên hành trình phía trước.", duration: 7400
     },
     {
-      id: "question", theme: "question", icon: "?", eyebrow: "NỤ HỎI THẬT KHẼ",
+      id: "question", theme: "question", icon: "?", eyebrow: "RIO HỎI THẬT KHẼ",
       title: "Hôm nay bạn đã\ntự khen mình chưa?", text: "Dù câu trả lời là gì, bạn vẫn đã cố gắng rất nhiều rồi.", wait: true
     },
     {
-      id: "final", theme: "final", icon: "✿", eyebrow: "GỬI BẰNG CẢ TẤM LÒNG",
-      title: "Chúc bạn một ngày\nthật dịu dàng", text: "Mong mọi yêu thương hôm nay sẽ ở lại bên bạn thật lâu.", final: true, burst: true
+      id: "final", theme: "final", icon: "♡", eyebrow: "GỬI BẰNG CẢ TẤM LÒNG",
+      title: "Chúc bạn một ngày\nthật đáng yêu", text: "Rio và bạn gửi đến bạn một cái ôm thật ấm cùng thật nhiều điều tốt đẹp.", final: true, burst: true
     }
   ];
 
@@ -141,11 +141,11 @@
     if (current !== scenes.findIndex(scene => scene.wait)) return;
     window.clearTimeout(timer);
     choices.hidden = true;
-    eyebrow.textContent = answer === "yes" ? "NỤ MỪNG LẮM" : "NỤ MUỐN NHẮN BẠN";
-    title.textContent = answer === "yes" ? "Giỏi quá, nhớ nhé!" : "Vậy Nụ khen bạn nha";
+    eyebrow.textContent = answer === "yes" ? "RIO MỪNG LẮM" : "RIO MUỐN NHẮN BẠN";
+    title.textContent = answer === "yes" ? "Giỏi quá, nhớ nhé!" : "Vậy Rio khen bạn nha";
     copy.textContent = answer === "yes"
       ? "Hãy cứ dịu dàng với chính mình như cách bạn vẫn dịu dàng với mọi người."
-      : "Bạn mạnh mẽ hơn bạn nghĩ, đáng yêu hơn bạn tưởng và xứng đáng được nghỉ ngơi nữa đó.";
+      : "Bạn tuyệt vời hơn bạn nghĩ và xứng đáng được nghỉ ngơi, được vui vẻ, được yêu thương nữa đó.";
     nextButton.hidden = true;
     $("#tapHint").hidden = true;
     fireworksBurst(width * 0.5, height * 0.38, 0.6);
