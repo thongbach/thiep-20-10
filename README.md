@@ -1,6 +1,6 @@
 # Một ngày thật dịu dàng · 20/10
 
-Trang kể chuyện tương tác toàn màn hình, thiết kế riêng cho Thông Bạch. Chạm để bắt đầu: pháo hoa nở, giai điệu nhẹ được tạo trực tiếp trong trình duyệt, các cảnh lần lượt hiện ra và kết thúc bằng lời chúc 20/10.
+Thiệp kể chuyện tương tác toàn màn hình với Rio, chú mèo nhỏ mang lời chúc 20/10 từ Rio và bạn. Chạm để bắt đầu: pháo hoa nở, giai điệu nhẹ được tạo trực tiếp trong trình duyệt, những lời chúc tốt đẹp lần lượt hiện ra.
 
 ## Tính năng
 
@@ -8,7 +8,7 @@ Trang kể chuyện tương tác toàn màn hình, thiết kế riêng cho Thôn
 - Chạm màn hình hoặc nút **Tiếp tục** để chuyển cảnh; các cảnh cũng tự chuyển.
 - Có câu hỏi tương tác, pháo hoa, nhạc nhẹ bật/tắt và nút xem lại.
 - Không có nút chia sẻ, không tải nhạc hay thư viện bên ngoài.
-- Có thể cá nhân hóa lời chúc bằng `?to=TenNguoiNhan&from=TenNguoiGui`.
+- Có thể cá nhân hóa người nhận và lời chúc bằng `?to=TenNguoiNhan&from=TenNguoiGui`.
 
 ## GitHub Pages
 
