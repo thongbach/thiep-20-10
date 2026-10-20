@@ -15,11 +15,6 @@
   const signature = $("#signature");
   const nextButton = $("#nextButton");
   const replayButton = $("#replayButton");
-  const musicToggle = $("#musicToggle");
-  const musicLabel = $("#musicLabel");
-  const musicPanel = $("#musicPanel");
-  const musicFrame = $("#musicFrame");
-  const musicClose = $("#musicClose");
   const canvas = $("#fireworks");
   const ctx = canvas.getContext("2d");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -67,7 +62,6 @@
 
   let current = -1;
   let timer = 0;
-  let musicOpen = false;
   let width = 0;
   let height = 0;
   let particles = [];
@@ -169,24 +163,6 @@
     [...progress.children].forEach(segment => segment.classList.remove("is-done", "is-current"));
   }
 
-  function syncMusicPanel() {
-    musicToggle.setAttribute("aria-expanded", String(musicOpen));
-    musicToggle.setAttribute("aria-label", musicOpen ? "Đóng trình phát Dancin’ My Way" : "Mở nhạc Dancin’ My Way");
-    musicLabel.textContent = musicOpen ? "NHẠC · ĐÓNG" : "NHẠC · MỞ";
-  }
-
-  function setMusicPanel(open) {
-    musicOpen = Boolean(open);
-    musicPanel.hidden = !musicOpen;
-    if (musicOpen) {
-      musicFrame.src = musicFrame.dataset.src;
-      musicClose.focus({ preventScroll: true });
-    } else {
-      musicFrame.src = "about:blank";
-      musicToggle.focus({ preventScroll: true });
-    }
-    syncMusicPanel();
-  }
 
   function resizeCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -240,20 +216,18 @@
   $("#startButton").addEventListener("click", startExperience);
   nextButton.addEventListener("click", nextScene);
   replayButton.addEventListener("click", replay);
-  musicToggle.addEventListener("click", () => setMusicPanel(!musicOpen));
-  musicClose.addEventListener("click", () => setMusicPanel(false));
   choices.addEventListener("click", event => {
     const button = event.target.closest("[data-answer]");
     if (button) answerQuestion(button.dataset.answer);
   });
   opening.addEventListener("click", event => {
-    if (!event.target.closest("button,.music-button,.music-panel")) startExperience();
+    if (!event.target.closest("button")) startExperience();
   });
   story.addEventListener("click", event => {
-    if (!event.target.closest("button,.music-button,.music-panel") && current >= 0 && !scenes[current].wait && !scenes[current].final) nextScene();
+    if (!event.target.closest("button") && current >= 0 && !scenes[current].wait && !scenes[current].final) nextScene();
   });
   document.addEventListener("keydown", event => {
-    if (event.target.closest("button,.music-panel")) return;
+    if (event.target.closest("button")) return;
     if (event.key === " " || event.key === "ArrowRight" || event.key === "Enter") {
       event.preventDefault();
       if (current < 0) startExperience();
@@ -264,6 +238,5 @@
 
   buildProgress();
   resizeCanvas();
-  syncMusicPanel();
   drawFireworks();
 })();
